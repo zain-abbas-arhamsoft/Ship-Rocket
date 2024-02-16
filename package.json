@@ -1,0 +1,70 @@
+{
+  "name": "ship-rocket-backend",
+  "version": "1.0.0",
+  "description": "Ship Rocket Backend APIs",
+  "author": "Freelancer",
+  "main": "src/index.js",
+  "private": false,
+  "license": "MIT",
+  "engines": {
+    "node": ">=18",
+    "yarn": "*"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon ./src/index.js",
+    "lint": "eslint ./",
+    "lint:fix": "eslint ./ --fix",
+    "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
+    "prepare": "husky"
+  },
+  "keywords": [
+    "nodejs",
+    "Ship Rocket",
+    "API",
+    "Ship Rocket NodeJS API"
+  ],
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "bluebird": "^3.7.2",
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-bearer-token": "^2.4.0",
+    "express-ip": "^1.0.4",
+    "express-rate-limit": "^5.1.3",
+    "express-validation": "^3.0.6",
+    "http-status": "^1.4.2",
+    "jsonwebtoken": "^8.5.1",
+    "jwt-simple": "^0.5.6",
+    "method-override": "^3.0.0",
+    "moment-timezone": "^0.5.31",
+    "mongoose": "^5.10.5",
+    "multer": "^1.4.5-lts.1",
+    "passport": "^0.6.0",
+    "passport-local": "^1.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-n": "^16.6.2",
+    "eslint-plugin-prettier": "^5.1.3",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-react": "^7.33.2",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    "prettier": "^3.2.5",
+    "pretty-quick": "^4.0.0"
+  },
+  "lint-staged": {
+    "*.js": "eslint"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged && pretty-quick --staged"
+    }
+  }
+}
