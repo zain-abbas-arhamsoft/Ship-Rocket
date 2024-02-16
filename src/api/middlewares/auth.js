@@ -1,5 +1,10 @@
 const jwt = require("jsonwebtoken");
-const byPassedRoutes = ["/v1/users/register", "/v1/users/login"];
+const byPassedRoutes = [
+  "/v1/users/register",
+  "/v1/users/login",
+  "/v1/shipments/create",
+  "/v1/product/create",
+];
 
 const verifyAccessToken = async (req, res, next) => {
   const originalUrl = req.originalUrl;

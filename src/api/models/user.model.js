@@ -12,13 +12,15 @@ const UserSchema = new mongoose.Schema(
   {
     name: { type: String },
     email: { type: String },
-    company_name: String,
+    companyName: { type: String },
     address: {
       type: String,
       required: true,
       maxlength: 200,
     },
-    address_2: String,
+    address2: {
+      type: String,
+    },
     city: {
       type: String,
       required: true,

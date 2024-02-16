@@ -1,4 +1,4 @@
-const passport = require("passport");
+const Passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const User = require("../models/user.model");
 
@@ -8,7 +8,7 @@ exports.register = async (req, res, next) => {
 
     if (!name || !email || !password) {
       return res.send({
-        success: false,
+        status: false,
         message: "Please fill all required fields",
       });
     }
@@ -19,7 +19,7 @@ exports.register = async (req, res, next) => {
     });
     if (user) {
       return res.send({
-        success: false,
+        status: false,
         data: user,
         message: "A Wallet or Email already associated to some other user",
       });
@@ -29,7 +29,7 @@ exports.register = async (req, res, next) => {
 
     await user.save();
     return res.send({
-      success: true,
+      status: true,
       data: user,
       message: "User Signup successfully.",
     });
@@ -48,7 +48,7 @@ exports.login = async (req, res, next) => {
         .send({ status: false, message: "Incorrect email or password" });
     }
 
-    passport.use(
+    Passport.use(
       new LocalStrategy(
         { usernameField: "email" },
         (username, password, done) => {
@@ -78,7 +78,7 @@ exports.login = async (req, res, next) => {
     );
 
     // call for passport authentication
-    passport.authenticate("local", async (err, user, info) => {
+    Passport.authenticate("local", async (err, user, info) => {
       if (err) {
         return res.status(400).send({
           err,

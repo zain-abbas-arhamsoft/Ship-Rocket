@@ -4,28 +4,41 @@ const mongoose = require("mongoose");
  * @private
  */
 const ShipmentSchema = new mongoose.Schema({
-  order_number: {
+  orderNumber: {
     type: String,
-    required: true,
+    required: true, // string - max length: 20
     maxlength: 20,
   },
-  payment_type: {
+  paymentType: {
     type: String,
     required: true,
-    enum: ["cod", "prepaid", "reverse"],
+    enum: ["cod", "prepaid", "reverse"], // Valid Values - cod, prepaid & reverse
   },
-  package_weight: {
+  packageWeight: {
     type: Number,
-    default: 0,
+    default: 0, // Weight in grams
   },
-  package_length: Number,
-  package_breadth: Number,
-  package_height: Number,
-  request_auto_pickup: String,
-  shipping_charges: Number,
-  cod_charges: Number,
-  discount: Number,
-  order_amount: {
+  packageLength: {
+    type: Number, // Package length in cm.
+  },
+  packageBreadth: { type: Number }, // Package breadth in cm.
+  packageHeight: {
+    type: Number, // Package height in cm.
+  },
+  requestAutoPickup: {
+    type: Boolean,
+    default: true, // Use Yes to send auto pickup request to courier.
+  },
+  shippingCharges: {
+    type: Number,
+  },
+  codCharges: {
+    type: Number,
+  },
+  discount: {
+    type: Number,
+  },
+  orderAmount: {
     type: Number,
     required: true,
   },
@@ -35,13 +48,17 @@ const ShipmentSchema = new mongoose.Schema({
       required: true,
       maxlength: 200,
     },
-    company_name: String,
+    companyName: {
+      type: String,
+    },
     address: {
       type: String,
       required: true,
       maxlength: 200,
     },
-    address_2: String,
+    address2: {
+      type: String,
+    },
     city: {
       type: String,
       required: true,
@@ -52,7 +69,7 @@ const ShipmentSchema = new mongoose.Schema({
       required: true,
       maxlength: 40,
     },
-    pincode: {
+    pinCode: {
       type: String,
       required: true,
       minlength: 6,
@@ -65,8 +82,9 @@ const ShipmentSchema = new mongoose.Schema({
       maxlength: 10,
     },
   },
-  pickup: {
-    warehouse_name: {
+
+  pickUp: {
+    wareHouseName: {
       type: String,
       required: true,
       maxlength: 20,
@@ -81,7 +99,9 @@ const ShipmentSchema = new mongoose.Schema({
       required: true,
       maxlength: 200,
     },
-    address_2: String,
+    address2: {
+      type: String,
+    },
     city: {
       type: String,
       required: true,
@@ -92,7 +112,7 @@ const ShipmentSchema = new mongoose.Schema({
       required: true,
       maxlength: 40,
     },
-    pincode: {
+    pinCode: {
       type: String,
       required: true,
       minlength: 6,
@@ -104,21 +124,85 @@ const ShipmentSchema = new mongoose.Schema({
       minlength: 10,
       maxlength: 10,
     },
-    gst_number: String,
+    gstNumber: {
+      type: String,
+    },
   },
-  is_rto_different: String,
+
+  isRtoDifferent: {
+    type: String,
+    enum: ["yes", "no"],
+  },
   rto: {
-    warehouse_name: String,
-    name: String,
-    address: String,
-    address_2: String,
-    city: String,
-    state: String,
-    pincode: String,
-    phone: String,
+    wareHouseName: {
+      type: String,
+      maxlength: 20,
+      required: function () {
+        return this.isRtoDifferent === "yes"; // Require if RTO is different
+      },
+    },
+    name: {
+      type: String,
+      maxlength: 200,
+      required: function () {
+        return this.isRtoDifferent === "yes"; // Require if RTO is different
+      },
+    },
+    address: {
+      type: String,
+      maxlength: 200,
+      required: function () {
+        return this.isRtoDifferent === "yes"; // Require if RTO is different
+      },
+    },
+    address2: {
+      type: String,
+      required: function () {
+        return this.isRtoDifferent === "yes"; // Require if RTO is different
+      },
+    },
+    city: {
+      type: String,
+      maxlength: 40,
+      required: function () {
+        return this.isRtoDifferent === "yes"; // Require if RTO is different
+      },
+    },
+    state: {
+      type: String,
+      maxlength: 40,
+      required: function () {
+        return this.isRtoDifferent === "yes"; // Require if RTO is different
+      },
+    },
+    pinCode: {
+      type: String,
+      minlength: 6,
+      maxlength: 6,
+      required: function () {
+        return this.isRtoDifferent === "yes"; // Require if RTO is different
+      },
+    },
+    phone: {
+      type: String,
+      minlength: 10,
+      maxlength: 10,
+      required: function () {
+        return this.isRtoDifferent === "yes"; // Require if RTO is different
+      },
+    },
+    gstNumber: {
+      type: String,
+      required: function () {
+        return this.isRtoDifferent === "yes"; // Require if RTO is different
+      },
+    },
   },
-  courier_id: Number,
-  is_insurance: {
+
+  courierId: {
+    type: Number,
+  },
+  isInsurance: {
     type: Number,
     default: 0,
     enum: [0, 1],
